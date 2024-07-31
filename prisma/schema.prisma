@@ -1,0 +1,51 @@
+// Assurez-vous de ne pas avoir de duplicata pour le générateur "client"
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  username      String          @unique
+  email         String          @unique
+  passwordHash  String
+  isPremium     Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  products      UserProduct[]
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  url           String
+  imageUrl      String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  priceHistory  PriceHistory[]
+  users         UserProduct[]
+}
+
+model UserProduct {
+  id            Int             @id @default(autoincrement())
+  userId        Int
+  productId     Int
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  user          User            @relation(fields: [userId], references: [id])
+  product       Product         @relation(fields: [productId], references: [id])
+  @@unique([userId, productId])
+}
+
+model PriceHistory {
+  id            Int             @id @default(autoincrement())
+  productId     Int
+  price         Float
+  date          DateTime        @default(now())
+  product       Product         @relation(fields: [productId], references: [id])
+}
+
