@@ -1,14 +1,29 @@
 "use client";
 
 import { useState } from 'react';
+import { auth } from '@/lib/auth'
+import { getServerSession } from "next-auth";
+import { signIn, signOut } from 'next-auth/react';
 
-const Header = () => {
+const Header = async () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleClick = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+    const session = await getServerSession(auth) 
+  //   const handleLogout = async () => {
+  //   await fetch('/api/auth/signout', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  // };
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
   return (
     <header className="flex shadow-sm py-3 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full">
@@ -41,19 +56,30 @@ const Header = () => {
               </li>
             ))}
           </ul>
-
+          
         </div>
-
         <div className="flex items-center max-sm:ml-auto space-x-6">
-          <a type="button"
-            className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold" href='/login'>LOGIN
-            / SIGNUP</a>
-
-        </div>
+      {session?.user ? (
+        <a
+          type="button"
+          className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
+          href="/api/auth/signout/github"
+        >
+          LOGOUT
+        </a>
+      ) : (
+        <a
+          type="button"
+          className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
+          href="/api/auth/signin/github"
+        >
+          LOGIN with GitHub
+        </a>
+      )}
+    </div>
       </div>
     </header>
   );
 };
 
 export default Header;
-
