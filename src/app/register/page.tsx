@@ -6,7 +6,7 @@ const RegisterPage = () => {
       <div className="flex flex-col justify-center font-[sans-serif] sm:h-screen p-4">
   <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
     <div className="text-center mb-12">
-      <a href="javascript:void(0)">
+      <a onClick={(e) => e.preventDefault()}>
         <img
           src="https://pricetrackerdata.com/priceTrackerLogo.png"
           alt="logo"

@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { auth } from '@/lib/auth'
-import { getServerSession } from "next-auth";
-import { signIn, signOut } from 'next-auth/react';
+import HeaderServer from './HeaderServer';
 
 const Header = async () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,22 +10,11 @@ const Header = async () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-    const session = await getServerSession(auth) 
-  //   const handleLogout = async () => {
-  //   await fetch('/api/auth/signout', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  // };
-  const handleLogout = async () => {
-    await signOut({ callbackUrl: '/' });
-  };
+
   return (
     <header className="flex shadow-sm py-3 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
       <div className="flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full">
-        <a href="javascript:void(0)">
+        <a onClick={(e) => e.preventDefault()}>
           <img src="https://pricetrackerdata.com/priceTrackerLogo.png" alt="logo" className="w-36" />
         </a>
 
@@ -49,34 +36,21 @@ const Header = async () => {
 
           <ul
             className="lg:flex lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+            <li key="Home" className="max-lg:border-b max-lg:py-3 max-lg:px-3 relative lg:after:absolute lg:after:bg-black lg:after:w-full lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300">
+              <a href="/" className="text-black block text-[15px]">Home</a>
+            </li>
 
-            {['Home', 'Pruducts', 'Add-Pruduct', 'About', 'Contact'].map((item) => (
+            {['Products', 'Add-Product', 'About', 'Contact'].map((item) => (
               <li key={item} className="max-lg:border-b max-lg:py-3 max-lg:px-3 relative lg:after:absolute lg:after:bg-black lg:after:w-full lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300">
                 <a href={`/${item.toLowerCase()}`} className="text-black block text-[15px]">{item}</a>
               </li>
             ))}
           </ul>
-          
+
         </div>
         <div className="flex items-center max-sm:ml-auto space-x-6">
-      {session?.user ? (
-        <a
-          type="button"
-          className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
-          href="/api/auth/signout/github"
-        >
-          LOGOUT
-        </a>
-      ) : (
-        <a
-          type="button"
-          className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
-          href="/api/auth/signin/github"
-        >
-          LOGIN with GitHub
-        </a>
-      )}
-    </div>
+          <HeaderServer />
+        </div>
       </div>
     </header>
   );
