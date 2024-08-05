@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.12",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
+    "node-cron": "^3.0.3",
     "prisma": "^5.17.0",
     "puppeteer": "^22.15.0",
     "react": "^18",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.13",
+    "@types/node-cron": "^3.0.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18",
     "eslint": "^8",

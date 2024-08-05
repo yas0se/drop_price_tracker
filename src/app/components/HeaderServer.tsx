@@ -2,8 +2,7 @@ import { getServerSession } from "next-auth";
 import { auth } from '@/lib/auth';
 
 export default async function HeaderServer() {
-  const session = await getServerSession(auth);
-  console.log('session: ', session); 
+  const session = await getServerSession(auth); 
 
   return (
     <div>
