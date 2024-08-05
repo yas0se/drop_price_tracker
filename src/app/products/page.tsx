@@ -32,7 +32,7 @@ const ProductsPage = async () => {
                 <h3 className="text-lg font-bold text-gray-800">
                   {product.name}
                 </h3>
-                <div className="mt-4 flex items-center flex-wrap gap-2">
+                {/* <div className="mt-4 flex items-center flex-wrap gap-2">
                   <h4 className="text-lg font-bold text-gray-800">${product.price}</h4>
                   <div className="bg-gray-100 w-10 h-10 flex items-center justify-center rounded-full cursor-pointer ml-auto">
                     <svg
@@ -46,7 +46,7 @@ const ProductsPage = async () => {
                       />
                     </svg>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
